@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pinboard</title>
+
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="pinboard.css" />
+</head>
+<body>
+    <div class="container">
+
+<!-- Main form for search / url input -->
+
+        <form id="form-input" method="get">
+            <div class="input-group">
+                <input type="text" class="form-control"
+                    id="maininput"
+                    name="input"
+                    autocomplete="off"
+                    autofocus="autofocus"
+                    placeholder="Enter URL to save or term to search"
+                    aria-label=""
+                />
+            </div>
+            <div id="results"></div>
+        </form>
+
+
+<!-- List of tags -->
+
+        <div id="tags"></div>
+
+
+<!-- List of posts -->
+
+        <div id="posts" style="display: block" class="list-group"></div>
+
+
+<!-- Modal dialog for providing token -->
+
+        <div id="auth-modal" class="modal" role="dialog">
+            <form id="auth-form" method="post">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Pinboard authentication</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div
+                                id="auth-modal-info"
+                                class="alert alert-danger"
+                                role="alert"
+                                style="display: none;"
+                            ></div>
+
+                            <label for="">Token</label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="token-input"
+                                aria-describedby="token-help"
+                                placeholder="Enter token"
+                            />
+
+                            <small id="token-help" class="form-text text-muted">
+                                (<b>Tip</b>: you can get your
+                                <a href="https://pinboard.in/settings/password">
+                                    Pinboard API Token
+                                here</a>;
+                                make sure you include the whole token, which should start with your username)
+                            </small>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">
+                                Save
+                            </button>
+
+                            <!--<button type="button" class="btn btn-secondary cancel">Cancel</button>-->
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="progress-modal" class="modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="progress-title" class="modal-title"></h5>
+                    </div>
+                    <div class="modal-body">
+                        <!--Fetching remote URL …-->
+
+                        <div class="progress">
+                            <div
+                                class="progress-bar progress-bar-striped progress-bar-animated"
+                                role="progressbar"
+                                style="width: 50%"
+                                aria-valuenow="50"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- form for adding / editing a post -->
+        <form id="form-post" method="post">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>URL</th>
+                        <td>
+                            <input
+                                id="post-url"
+                                name="url"
+                                class="form-control"
+                                type="text"
+                            />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Title</th>
+                        <td>
+                            <input
+                                id="post-title"
+                                name="description"
+                                class="form-control" type="text"
+                            />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Description</th>
+
+                        <td>
+                            <textarea
+                                id="post-desc"
+                                name="extended"
+                                rows="6"
+                                class="form-control"></textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Tags</th>
+                        <td>
+                            <input id="post-tags" class="form-control" type="text" />
+
+                            <!--<label class="form-check-label">
+                                <input
+                                    class="form-check-input"
+                                    checked="checked"
+                                    name="tags[]"
+                                    type="checkbox"
+                                />
+                                TAG
+                            </label>-->
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <button id="save-post" type="submit" class="btn btn-primary">
+                Save
+            </button>
+
+            <button id="cancel-post" type="button" class="btn btn-secondary">
+                Cancel
+            </button>
+
+            <button id="fetch-post" type="button" class="float-right btn btn-light">
+                Fetch
+            </button>
+        </form>
+
+    </div>
+
+    <script src="pinboard.js"></script>
+
+</body>
+
+</html>
